@@ -20,8 +20,6 @@ export default async function handler(
   try {
     const {search} = req.body
 
-    console.log('Search is >>', search)
-
     const response = await fetch(`https://api.brightdata.com/dca/trigger?collector=c_lf157hab8xdoqejbs&queue_next=1`, {
       method: 'POST',
       headers: {
@@ -42,7 +40,7 @@ export default async function handler(
       search,
       start_eta,
       status: 'pending',
-      updateAt: admin.firestore.Timestamp.now()
+      updateAt: start_eta,
     })
   
   res.status(200).json({ collection_id, start_eta})

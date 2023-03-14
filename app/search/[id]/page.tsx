@@ -2,6 +2,7 @@
 
 import { doc } from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
+import Result from '../../../components/Result'
 import { db } from '../../../firebase'
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 }
 
 const SearchPage = ({ params: { id } }: Props) => {
-    const [snapshoot, loading, error] = useDocument(doc(db, 'searches', id))
+    const [snapshot, loading, error] = useDocument(doc(db, 'searches', id))
 
     if (loading) return (
         <h1 className='p-10 text-xl text-center animate-pulse text-indigo-600/50'>
@@ -19,9 +20,9 @@ const SearchPage = ({ params: { id } }: Props) => {
         </h1>
     )
 
-    if (!snapshoot?.exists()) return
+    if (!snapshot?.exists()) return
 
-    if (snapshoot.data()?.status === 'pending')
+    if (snapshot.data()?.status === 'pending')
         return (
             <div className='flex flex-col items-center justify-between py-10 gap-y-5'>
                 <p className='text-center text-red-600 animate-pulse'>
@@ -31,7 +32,29 @@ const SearchPage = ({ params: { id } }: Props) => {
         )
 
     return (
-        <div></div>
+        <div className='py-5'>
+            <div className='flex items-center justify-between mb-7'>
+                <div className='flex flex-col md:flex-row gap-x-4'>
+                    <h1 className='font-bold'>
+                        Search results for {" "}
+                        <span className='text-red-600'>
+                            '{snapshot.data()?.search}'
+                        </span>
+                    </h1>
+                    <p className='text-gray-300'>
+                        {snapshot.data()?.result?.length > 0 && `${snapshot.data()?.result?.length} results found`}
+                    </p>
+                </div>
+            </div>
+
+            {
+                snapshot.data()?.result?.length > 0 && (
+                    <Result results={snapshot.data()?.result} />
+                )
+            }
+
+
+        </div>
     )
 }
 
