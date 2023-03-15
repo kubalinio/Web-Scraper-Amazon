@@ -32,7 +32,6 @@ export default async function handler(
     })
 
     const data = await response.json()
-    console.log('DATA IS >>>', data)
 
     const {collection_id, start_eta} = data
 
