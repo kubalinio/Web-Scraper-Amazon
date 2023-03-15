@@ -2,7 +2,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import {getFirestore} from 'firebase/firestore'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBwJVvOdZfE2ihg56M3YnCKGNYA18wcNhI",
+    apiKey: "",
     authDomain: "brightdata--scraper-f21dc.firebaseapp.com",
     projectId: "brightdata--scraper-f21dc",
     storageBucket: "brightdata--scraper-f21dc.appspot.com",
